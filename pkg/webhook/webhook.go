@@ -97,14 +97,15 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		return
 	}*/
 
-	log.Println(dfr)
+	log.Println(dfr.QueryResult)
 
-	_, err = dflow.DoSignIn(dfr.Session)
+	resp, err := dflow.DoSignIn(dfr.Session)
 	if err != nil {
 		log.Println(err)
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	log.Println(resp)
 
 	// Do things with the context you just retrieved
 	dff := &df.Fulfillment{

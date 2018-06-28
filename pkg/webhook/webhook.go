@@ -113,7 +113,10 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		respPJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
 		log.Println("respPJ: ", string(respPJ))
 		for _, v := range dfr.QueryResult.OutputContexts {
-			log.Println("OutputContext: ", v)
+			if v.Name == "actions_intent_sign_in" {
+				respOCPJ, _ := v.Parameters.MarshalJSON()
+				log.Println("respOCPJ: ", string(respOCPJ))
+			}
 		}
 		/*
 			type params struct {

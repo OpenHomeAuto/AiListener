@@ -53,5 +53,6 @@ func Execute() {
 
 func init() {
 	util.ServiceAccountFilePath = rootCmd.Flags().String("serviceAccountJson", "", "Enter a Path to the exported json file from your service account")
-	util.HTTPSPort = rootCmd.Flags().Int("port", 8888, "Define the Port to listen on")
+	util.HTTPSPort = rootCmd.Flags().Int("https-port", 8888, "Define the SSL Port to listen on")
+	util.HTTPPort = rootCmd.Flags().Int("http-port", 8884, "Define the HTTP Port to listen on")
 }

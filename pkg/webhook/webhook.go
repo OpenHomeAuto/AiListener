@@ -1,6 +1,7 @@
 package webhook
 
 import (
+	"crypto/rand"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
@@ -9,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	df "github.com/leboncoin/dialogflow-go-webhook"
 	"golang.org/x/crypto/acme/autocert"
+	"golang.org/x/net/http2"
 	"log"
 	"net/http"
 	"strconv"
@@ -31,7 +33,12 @@ func Start() {
 	var r = mux.NewRouter()
 
 	r.HandleFunc("/webhook", MessagesEndPoint).Methods("POST")
-	server := makeServerFromMux(r)
+	httpserver := makeServerFromMux(r)
+	httpsserver := makeServerFromMux(r)
+
+	httpsserver.Addr = ":" + strconv.Itoa(*util.HTTPPort)
+
+	go httpserver.ListenAndServe()
 
 	dataDir := "."
 	m = &autocert.Manager{
@@ -39,11 +46,19 @@ func Start() {
 		Cache:  autocert.DirCache(dataDir),
 	}
 
-	server.Addr = ":" + strconv.Itoa(*util.HTTPSPort)
-	server.TLSConfig = &tls.Config{GetCertificate: m.GetCertificate}
+	tlsConfig := &tls.Config{
+		Rand:           rand.Reader,
+		Time:           time.Now,
+		NextProtos:     []string{http2.NextProtoTLS, "http/1.1"},
+		MinVersion:     tls.VersionTLS12,
+		GetCertificate: m.GetCertificate,
+	}
 
-	fmt.Printf("Starting HTTPS server on %s\n", server.Addr)
-	err := server.ListenAndServeTLS("", "")
+	httpsserver.Addr = ":" + strconv.Itoa(*util.HTTPSPort)
+	httpsserver.TLSConfig = tlsConfig
+
+	fmt.Printf("Starting HTTPS server on %s\n", httpsserver.Addr)
+	err := httpsserver.ListenAndServeTLS("", "")
 	if err != nil {
 		log.Fatalf("httpsSrv.ListendAndServeTLS() failed with %s", err)
 	}

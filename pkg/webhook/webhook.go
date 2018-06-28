@@ -95,10 +95,9 @@ type OriginalResp struct {
 			Intent string `json:"intent"`
 		} `json:"inputs"`
 		User struct {
-			LastSeen    time.Time `json:"lastSeen"`
-			Locale      string    `json:"locale"`
-			UserID      string    `json:"userId"`
-			AccessToken string    `json:"accessToken"`
+			LastSeen time.Time `json:"lastSeen"`
+			Locale   string    `json:"locale"`
+			UserID   string    `json:"userId"`
 		} `json:"user"`
 		Conversation struct {
 			ConversationID    string `json:"conversationId"`
@@ -150,7 +149,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		if oresp.Payload.User.AccessToken == "" {
+		if oresp.Payload.User.UserID == "" {
 			resp := dflow.DoSignIn()
 			// Do things with the context you just retrieved
 			dff := &df.Fulfillment{

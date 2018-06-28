@@ -21,7 +21,7 @@ func DoSignIn(session string) (*dialogflowpb.DetectIntentResponse, error) {
 		QueryInput: &dialogflowpb.QueryInput{
 			Input: &dialogflowpb.QueryInput_Event{
 				Event: &dialogflowpb.EventInput{
-					Name:         "actions.intent.SIGN_IN",
+					Name:         "actions_intent_SIGN_IN",
 					LanguageCode: "de",
 				},
 			},

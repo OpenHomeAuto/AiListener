@@ -105,7 +105,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	log.Println(resp)
+	log.Println(resp.QueryResult)
 
 	// Do things with the context you just retrieved
 	dff := &df.Fulfillment{

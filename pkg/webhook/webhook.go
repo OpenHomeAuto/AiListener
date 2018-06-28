@@ -118,6 +118,8 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 	var dfr *df.Request
 	//var p params
 
+	log.Println(req.Header)
+
 	decoder := json.NewDecoder(req.Body)
 	if err = decoder.Decode(&dfr); err != nil {
 		rw.WriteHeader(http.StatusBadRequest)

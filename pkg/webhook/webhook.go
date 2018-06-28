@@ -110,6 +110,8 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
 	case "auth":
+		OrespJ, _ := dfr.OriginalDetectIntentRequest.MarshalJSON()
+		log.Println("OrespJ: ", string(OrespJ))
 		respPJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
 		log.Println("respPJ: ", string(respPJ))
 		for _, v := range dfr.QueryResult.OutputContexts {

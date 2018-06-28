@@ -114,7 +114,8 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 
 		dff := &df.Fulfillment{
 			FulfillmentMessages: df.Messages{
-				{RichMessage: df.Text{Text: []string{"got it"}}},
+				df.ForGoogle(df.SingleSimpleResponse("default", "default")),
+				{RichMessage: df.Text{Text: []string{"default"}}},
 			},
 		}
 		rw.Header().Set("Content-Type", "application/json")

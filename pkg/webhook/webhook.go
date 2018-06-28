@@ -36,9 +36,15 @@ func Start() {
 	httpserver := makeServerFromMux(r)
 	httpsserver := makeServerFromMux(r)
 
-	httpsserver.Addr = ":" + strconv.Itoa(*util.HTTPPort)
+	httpserver.Addr = ":" + strconv.Itoa(*util.HTTPPort)
 
-	go httpserver.ListenAndServe()
+	go func() {
+		fmt.Printf("Starting HTTP server on %s\n", httpserver.Addr)
+		err := httpserver.ListenAndServe()
+		if err != nil {
+			log.Fatalf("httpsSrv.ListendAndServeTLS() failed with %s", err)
+		}
+	}()
 
 	dataDir := "."
 	m = &autocert.Manager{

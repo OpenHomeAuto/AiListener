@@ -152,6 +152,10 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 			resp := dflow.DoSignIn()
 			// Do things with the context you just retrieved
 			dff := &df.Fulfillment{
+				FulfillmentMessages: df.Messages{
+					df.ForGoogle(df.SingleSimpleResponse("Starting Auth Process", "Starting Auth Process")),
+					{RichMessage: df.Text{Text: []string{"Starting Auth Process"}}},
+				},
 				FollowupEventInput: resp,
 			}
 

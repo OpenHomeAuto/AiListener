@@ -99,7 +99,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 
 	log.Println(dfr.QueryResult)
 
-	resp := dflow.DoSignIn(dfr.Session)
+	resp := dflow.DoSignIn()
 	// Do things with the context you just retrieved
 	dff := &df.Fulfillment{
 		FollowupEventInput: resp,

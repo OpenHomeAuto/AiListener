@@ -38,14 +38,14 @@
     <session id="958628364">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="47" />
-          <entry key="txt" value="30" />
+          <entry key="go" value="75" />
+          <entry key="txt" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="47" />
-          <entry key="PLAIN_TEXT" value="30" />
+          <entry key="Go" value="75" />
+          <entry key="PLAIN_TEXT" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">

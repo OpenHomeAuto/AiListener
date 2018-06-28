@@ -33,8 +33,15 @@ func Start() {
 	var r = mux.NewRouter()
 
 	r.HandleFunc("/webhook", MessagesEndPoint).Methods("POST")
-	httpserver := makeServerFromMux(r)
 	httpsserver := makeServerFromMux(r)
+
+	dataDir := "."
+	m = &autocert.Manager{
+		Prompt: autocert.AcceptTOS,
+		Cache:  autocert.DirCache(dataDir),
+	}
+
+	httpserver := makeServerFromMux(m.HTTPHandler(nil))
 
 	httpserver.Addr = ":" + strconv.Itoa(*util.HTTPPort)
 
@@ -45,12 +52,6 @@ func Start() {
 			log.Fatalf("httpsSrv.ListendAndServeTLS() failed with %s", err)
 		}
 	}()
-
-	dataDir := "."
-	m = &autocert.Manager{
-		Prompt: autocert.AcceptTOS,
-		Cache:  autocert.DirCache(dataDir),
-	}
 
 	tlsConfig := &tls.Config{
 		Rand:           rand.Reader,

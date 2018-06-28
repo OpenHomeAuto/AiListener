@@ -110,8 +110,9 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
 	case "auth":
-		respJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
-		log.Println(string(respJ))
+		respPJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
+		log.Println("respPJ: ", string(respPJ))
+		log.Println("OutputContexts: ", dfr.QueryResult.OutputContexts)
 		/*
 			type params struct {
 
@@ -124,7 +125,8 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 				return
 			}
 
-			log.Println(p)*/
+			log.Println(p)
+		*/
 
 		dff := &df.Fulfillment{
 			FulfillmentMessages: df.Messages{

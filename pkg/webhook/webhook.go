@@ -149,7 +149,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		if oresp.Payload.User.UserID == "" {
+		if "" == "" {
 			resp := dflow.DoSignIn()
 			// Do things with the context you just retrieved
 			dff := &df.Fulfillment{

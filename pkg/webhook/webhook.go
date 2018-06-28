@@ -112,7 +112,9 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 	case "auth":
 		respPJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
 		log.Println("respPJ: ", string(respPJ))
-		log.Println("OutputContexts: ", dfr.QueryResult.OutputContexts)
+		for _, v := range dfr.QueryResult.OutputContexts {
+			log.Println("OutputContext: ", v)
+		}
 		/*
 			type params struct {
 

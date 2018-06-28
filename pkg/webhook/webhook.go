@@ -99,20 +99,10 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 
 	log.Println(dfr.QueryResult)
 
-	resp, err := dflow.DoSignIn(dfr.Session)
-	if err != nil {
-		log.Println(err)
-		rw.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	log.Println(resp.QueryResult)
-
+	resp := dflow.DoSignIn(dfr.Session)
 	// Do things with the context you just retrieved
 	dff := &df.Fulfillment{
-		FulfillmentMessages: df.Messages{
-			df.ForGoogle(df.SingleSimpleResponse("hello", "hello")),
-			{RichMessage: df.Text{Text: []string{"hello"}}},
-		},
+		FollowupEventInput: resp,
 	}
 	rw.Header().Set("Content-Type", "application/json")
 	rw.WriteHeader(http.StatusOK)

@@ -38,24 +38,24 @@
     <session id="958628364">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="122" />
-          <entry key="txt" value="124" />
+          <entry key="go" value="132" />
+          <entry key="txt" value="141" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="122" />
-          <entry key="PLAIN_TEXT" value="124" />
+          <entry key="Go" value="132" />
+          <entry key="PLAIN_TEXT" value="141" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="8" />
+          <entry key="go" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="8" />
+          <entry key="Go" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.go.postfix.template.usages.trigger" />

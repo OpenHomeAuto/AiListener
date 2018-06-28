@@ -43,7 +43,7 @@ func Start() {
 
 	httpserver := makeServerFromMux(m.HTTPHandler(nil))
 
-	httpserver.Addr = ":" + strconv.Itoa(*util.HTTPPort)
+	httpserver.Addr = ":80"
 
 	go func() {
 		fmt.Printf("Starting HTTP server on %s\n", httpserver.Addr)

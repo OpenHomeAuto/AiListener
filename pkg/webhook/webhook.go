@@ -109,6 +109,18 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.Header().Set("Content-Type", "application/json")
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
+	case "auth":
+		log.Println(dfr.QueryResult)
+
+		dff := &df.Fulfillment{
+			FulfillmentMessages: df.Messages{
+				df.ForGoogle(df.SingleSimpleResponse("Authentication finished", "Authentication finished")),
+				{RichMessage: df.Text{Text: []string{"Authentication finished"}}},
+			},
+		}
+		rw.Header().Set("Content-Type", "application/json")
+		rw.WriteHeader(http.StatusOK)
+		json.NewEncoder(rw).Encode(dff)
 	default:
 		log.Println(dfr.QueryResult.Parameters)
 

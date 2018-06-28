@@ -110,7 +110,16 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
 	default:
-		log.Println(dfr.QueryResult)
+		log.Println(dfr.QueryResult.Parameters)
+
+		dff := &df.Fulfillment{
+			FulfillmentMessages: df.Messages{
+				{RichMessage: df.Text{Text: []string{"got it"}}},
+			},
+		}
+		rw.Header().Set("Content-Type", "application/json")
+		rw.WriteHeader(http.StatusOK)
+		json.NewEncoder(rw).Encode(dff)
 	}
 
 }

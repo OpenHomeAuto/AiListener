@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/Nordgedanken/homeAutomation/cmd"
+import "github.com/OpenHomeAuto/AiListener/cmd"
 
 func main() {
 	cmd.Execute()

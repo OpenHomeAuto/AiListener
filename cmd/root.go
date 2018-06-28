@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Nordgedanken/homeAutomation/pkg/util"
-	"github.com/Nordgedanken/homeAutomation/pkg/webhook"
+	"github.com/OpenHomeAuto/AiListener/pkg/util"
+	"github.com/OpenHomeAuto/AiListener/pkg/webhook"
 	"github.com/spf13/cobra"
 )
 
@@ -27,7 +27,7 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "homeAutomation",
+	Use:   "AiListener",
 	Short: "A brief description of your application",
 	Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:

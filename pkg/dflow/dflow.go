@@ -3,7 +3,7 @@ package dflow
 import (
 	dflow "cloud.google.com/go/dialogflow/apiv2"
 	"context"
-	"github.com/Nordgedanken/homeAutomation/pkg/util"
+	"github.com/OpenHomeAuto/AiListener/pkg/util"
 	"google.golang.org/api/option"
 	dialogflowpb "google.golang.org/genproto/googleapis/cloud/dialogflow/v2"
 )

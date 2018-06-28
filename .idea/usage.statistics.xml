@@ -23,17 +23,29 @@
         <counts>
           <entry key="gitignore" value="3" />
           <entry key="go" value="1130" />
-          <entry key="txt" value="14" />
+          <entry key="txt" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Git file" value="3" />
           <entry key="Go" value="1130" />
-          <entry key="PLAIN_TEXT" value="14" />
+          <entry key="PLAIN_TEXT" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.go.postfix.template.usages.trigger" />
+    </session>
+    <session id="958628364">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="go" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Go" value="4" />
+        </counts>
+      </usages-collector>
     </session>
   </component>
 </project>

@@ -39,7 +39,7 @@ func Start() {
 		Cache:  autocert.DirCache(dataDir),
 	}
 
-	server.Addr = strconv.Itoa(*util.HTTPSPort)
+	server.Addr = ":" + strconv.Itoa(*util.HTTPSPort)
 	server.TLSConfig = &tls.Config{GetCertificate: m.GetCertificate}
 
 	fmt.Printf("Starting HTTPS server on %s\n", server.Addr)

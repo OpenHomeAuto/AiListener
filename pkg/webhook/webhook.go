@@ -96,15 +96,21 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}*/
+	switch dfr.QueryResult.Action {
+	case "play_music":
+		log.Println(dfr.QueryResult)
 
-	log.Println(dfr.QueryResult)
+		resp := dflow.DoSignIn()
+		// Do things with the context you just retrieved
+		dff := &df.Fulfillment{
+			FollowupEventInput: resp,
+		}
 
-	resp := dflow.DoSignIn()
-	// Do things with the context you just retrieved
-	dff := &df.Fulfillment{
-		FollowupEventInput: resp,
+		rw.Header().Set("Content-Type", "application/json")
+		rw.WriteHeader(http.StatusOK)
+		json.NewEncoder(rw).Encode(dff)
+	default:
+		log.Println(dfr.QueryResult)
 	}
-	rw.Header().Set("Content-Type", "application/json")
-	rw.WriteHeader(http.StatusOK)
-	json.NewEncoder(rw).Encode(dff)
+
 }

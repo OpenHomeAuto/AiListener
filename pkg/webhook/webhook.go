@@ -97,8 +97,11 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		return
 	}*/
 
+	log.Println(dfr)
+
 	_, err = dflow.DoSignIn(dfr.Session)
 	if err != nil {
+		log.Println(err)
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}

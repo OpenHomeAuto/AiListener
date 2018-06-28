@@ -71,6 +71,48 @@ func Start() {
 	}
 }
 
+type OriginalResp struct {
+	Source  string `json:"source"`
+	Version string `json:"version"`
+	Payload struct {
+		IsInSandbox bool `json:"isInSandbox"`
+		Surface     struct {
+			Capabilities []struct {
+				Name string `json:"name"`
+			} `json:"capabilities"`
+		} `json:"surface"`
+		RequestType string `json:"requestType"`
+		Inputs      []struct {
+			RawInputs []struct {
+				Query     string `json:"query"`
+				InputType string `json:"inputType"`
+			} `json:"rawInputs"`
+			Arguments []struct {
+				RawText   string `json:"rawText"`
+				TextValue string `json:"textValue"`
+				Name      string `json:"name"`
+			} `json:"arguments"`
+			Intent string `json:"intent"`
+		} `json:"inputs"`
+		User struct {
+			LastSeen    time.Time `json:"lastSeen"`
+			Locale      string    `json:"locale"`
+			UserID      string    `json:"userId"`
+			AccessToken string    `json:"accessToken"`
+		} `json:"user"`
+		Conversation struct {
+			ConversationID    string `json:"conversationId"`
+			Type              string `json:"type"`
+			ConversationToken string `json:"conversationToken"`
+		} `json:"conversation"`
+		AvailableSurfaces []struct {
+			Capabilities []struct {
+				Name string `json:"name"`
+			} `json:"capabilities"`
+		} `json:"availableSurfaces"`
+	} `json:"payload"`
+}
+
 func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 	var err error
 	var dfr *df.Request
@@ -100,18 +142,46 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 	case "play_music":
 		log.Println(dfr.QueryResult)
 
-		resp := dflow.DoSignIn()
+		var oresp *OriginalResp
+		if err = json.Unmarshal(dfr.OriginalDetectIntentRequest, &oresp); err != nil {
+			rw.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		if oresp.Payload.User.AccessToken == "" {
+			resp := dflow.DoSignIn()
+			// Do things with the context you just retrieved
+			dff := &df.Fulfillment{
+				FollowupEventInput: resp,
+			}
+
+			rw.Header().Set("Content-Type", "application/json")
+			rw.WriteHeader(http.StatusOK)
+			json.NewEncoder(rw).Encode(dff)
+
+			return
+		}
+
 		// Do things with the context you just retrieved
 		dff := &df.Fulfillment{
-			FollowupEventInput: resp,
+			FulfillmentMessages: df.Messages{
+				df.ForGoogle(df.SingleSimpleResponse("Starting Music", "Starting Music")),
+				{RichMessage: df.Text{Text: []string{"Starting Music"}}},
+			},
 		}
 
 		rw.Header().Set("Content-Type", "application/json")
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
+		return
 	case "auth":
-		OrespJ, _ := dfr.OriginalDetectIntentRequest.MarshalJSON()
-		log.Println("OrespJ: ", string(OrespJ))
+		var oresp *OriginalResp
+		if err = json.Unmarshal(dfr.OriginalDetectIntentRequest, &oresp); err != nil {
+			rw.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		log.Printf("OrespJ: \n %+v\n", oresp)
 		respPJ, _ := dfr.QueryResult.Parameters.MarshalJSON()
 		log.Println("respPJ: ", string(respPJ))
 		for _, v := range dfr.QueryResult.OutputContexts {
@@ -143,6 +213,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.Header().Set("Content-Type", "application/json")
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
+		return
 	default:
 		log.Println(dfr.QueryResult)
 
@@ -155,6 +226,7 @@ func MessagesEndPoint(rw http.ResponseWriter, req *http.Request) {
 		rw.Header().Set("Content-Type", "application/json")
 		rw.WriteHeader(http.StatusOK)
 		json.NewEncoder(rw).Encode(dff)
+		return
 	}
 
 }
